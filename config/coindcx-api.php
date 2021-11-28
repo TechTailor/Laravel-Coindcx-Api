@@ -13,7 +13,7 @@ return [
 
     'auth' => [
         'key'        => env('COINDCX_KEY', ''),
-        'secret'     => env('COINDCX_SECRET', '')
+        'secret'     => env('COINDCX_SECRET', ''),
     ],
 
     /*
@@ -26,7 +26,7 @@ return [
      */
 
     'urls' => [
-        'api'  => 'https://api.coindcx.com/',
+        'api'     => 'https://api.coindcx.com/',
         'public'  => 'https://public.coindcx.com/',
     ],
 

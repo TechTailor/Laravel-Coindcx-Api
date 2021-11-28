@@ -23,36 +23,37 @@ class CoinDCXApi
         'exchange/v1/markets_details',
         'market_data/trade_history',
         'market_data/orderbook',
-        'market_data/candles'
+        'market_data/candles',
     ];
 
     /**
      * Constructor for CoinDCX.
-     * @param string  $key     API key
-     * @param string  $secret  API secret
-     * @param string  $api_url API base URL (see config for example)
-     * @param integer $timing  CoinDCX API timing setting (default 10000)
+     *
+     * @param string $key     API key
+     * @param string $secret  API secret
+     * @param string $api_url API base URL (see config for example)
+     * @param int    $timing  CoinDCX API timing setting (default 10000)
      */
     public function __construct($api_key = null, $api_secret = null, $api_url = null, $timing = 10000)
     {
-        $this->api_key        = (! empty($api_key)) ? $api_key : config('coindcx-api.auth.key');
-        $this->api_secret     = (! empty($api_secret)) ? $api_secret : config('coindcx-api.auth.secret');
-        $this->api_url        = (! empty($api_url)) ? $api_url : config('coindcx-api.urls.api');
-        $this->public_url        = (!empty($api_url)) ? $api_url : config('coindcx-api.urls.public');
+        $this->api_key = (!empty($api_key)) ? $api_key : config('coindcx-api.auth.key');
+        $this->api_secret = (!empty($api_secret)) ? $api_secret : config('coindcx-api.auth.secret');
+        $this->api_url = (!empty($api_url)) ? $api_url : config('coindcx-api.urls.api');
+        $this->public_url = (!empty($api_url)) ? $api_url : config('coindcx-api.urls.public');
     }
 
     /**
      * API Key and Secret Key setter function.
      * It's required for all Authenticated endpoints.
-     * https://docs.coindcx.com/#authentication
+     * https://docs.coindcx.com/#authentication.
      *
      * @param string $key    API Key
      * @param string $secret API Secret
      */
     public function setAPI($api_key, $api_secret)
     {
-       $this->api_key    = $api_key;
-       $this->api_secret = $api_secret;
+        $this->api_key = $api_key;
+        $this->api_secret = $api_secret;
     }
 
     //------ PUBLIC API CALLS --------
@@ -65,7 +66,7 @@ class CoinDCXApi
     */
 
     /**
-     * Get CoinDCX Exchange Ticker
+     * Get CoinDCX Exchange Ticker.
      *
      * @return mixed
      */
@@ -99,15 +100,16 @@ class CoinDCXApi
      * This API provides with a sorted list of most recent 30 trades
      * by default if limit parameter is not passed.
      *
-     * @param string $pair      (pair from Market Details API)
-     * @param  integer $limit    Default: 30; Max: 500
+     * @param string $pair  (pair from Market Details API)
+     * @param int    $limit Default: 30; Max: 500
+     *
      * @return mixed
      */
     public function getMarketTrades($pair, $limit = 30)
     {
         $data = [
-            'pair' => $pair,
-            'limit' => $limit
+            'pair'  => $pair,
+            'limit' => $limit,
         ];
 
         $this->api_url = $this->public_url;
@@ -120,13 +122,14 @@ class CoinDCXApi
      * This API provides with a sorted list (in descending order)
      * of bids and asks for a particular pair.
      *
-     * @param string $pair      (pair from Market Details API)
+     * @param string $pair (pair from Market Details API)
+     *
      * @return mixed
      */
     public function getOrderBook($pair)
     {
         $data = [
-            'pair' => $pair
+            'pair' => $pair,
         ];
 
         $this->api_url = $this->public_url;
@@ -139,15 +142,16 @@ class CoinDCXApi
      * This API provides with a sorted list (in descending order according to time key)
      * of candlestick bars for given pair. Candles are uniquely identified by their time.
      *
-     * @param string $pair      (pair from Market Details API)
-     * @param string $interval  1m,5m,15m,30m,1h,2h,4h,6h,8h,1d,3d,1w,1M
+     * @param string $pair     (pair from Market Details API)
+     * @param string $interval 1m,5m,15m,30m,1h,2h,4h,6h,8h,1d,3d,1w,1M
+     *
      * @return mixed
      */
     public function getCandles($pair, $interval = '5m')
     {
         $data = [
-            'pair' => $pair,
-            'interval' => $interval
+            'pair'     => $pair,
+            'interval' => $interval,
         ];
 
         $this->api_url = $this->public_url;
@@ -165,10 +169,11 @@ class CoinDCXApi
     */
 
     /**
-     * Get current account information
+     * Get current account information.
+     *
+     * @throws \Exception
      *
      * @return mixed
-     * @throws \Exception
      */
     public function getAccountInfo()
     {
@@ -178,10 +183,11 @@ class CoinDCXApi
     }
 
     /**
-     * Get current account balances
+     * Get current account balances.
+     *
+     * @throws \Exception
      *
      * @return mixed
-     * @throws \Exception
      */
     public function getBalances()
     {
@@ -191,10 +197,11 @@ class CoinDCXApi
     }
 
     /**
-     * Get current account trade history
+     * Get current account trade history.
+     *
+     * @throws \Exception
      *
      * @return mixed
-     * @throws \Exception
      */
     public function getTradeHistory()
     {
@@ -204,10 +211,11 @@ class CoinDCXApi
     }
 
     /**
-     * Get current account active orders
+     * Get current account active orders.
+     *
+     * @throws \Exception
      *
      * @return mixed
-     * @throws \Exception
      */
     public function getActiveOrders()
     {
@@ -220,14 +228,16 @@ class CoinDCXApi
      * Make public requests (Security Type: NONE).
      *
      * @param string $url    URL Endpoint
-     * @param array $params  Required and optional parameters
+     * @param array  $params Required and optional parameters
      * @param string $method GET, POST, PUT, DELETE
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     private function publicRequest($url, $params = [], $method = 'GET')
     {
-        $url = $this->api_url . $url;
+        $url = $this->api_url.$url;
 
         return $this->sendApiRequest($url, $method);
     }
@@ -236,21 +246,19 @@ class CoinDCXApi
      * Make private requests (Security Type: USER_DATA).
      *
      * @param string $url    URL Endpoint
-     * @param array $params  Required and optional parameters.
-     *
+     * @param array  $params Required and optional parameters.
      */
     private function privateRequest($url, $params = [], $method = 'POST')
     {
         // Build the POST data string
-        if (! in_array($url, $this->no_time_needed))
-        {
-            $params['timestamp']  = $this->milliseconds();
+        if (!in_array($url, $this->no_time_needed)) {
+            $params['timestamp'] = $this->milliseconds();
         }
 
         // Set API key and sign the message
-        $signature    = hash_hmac('sha256', json_encode($params), $this->api_secret);
+        $signature = hash_hmac('sha256', json_encode($params), $this->api_secret);
 
-        $url = $this->api_url . $url;
+        $url = $this->api_url.$url;
 
         return $this->sendApiRequest($url, $method, $params['timestamp'], $signature);
     }
@@ -260,56 +268,58 @@ class CoinDCXApi
      *
      * @param string $url    URL Endpoint with Query & Signature
      * @param string $method GET, POST, PUT, DELETE
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     private function sendApiRequest($url, $method, $timestamp = null, $signature = null)
     {
         try {
-            if ($method == 'POST')
+            if ($method == 'POST') {
                 $response = Http::withHeaders([
-                            'X-AUTH-APIKEY' => $this->api_key,
-                            'X-AUTH-SIGNATURE' => $signature
-                        ])->post($url, [
-                            'timestamp' => $timestamp
-                        ]);
-
-            elseif ($method == 'GET')
+                    'X-AUTH-APIKEY'    => $this->api_key,
+                    'X-AUTH-SIGNATURE' => $signature,
+                ])->post($url, [
+                    'timestamp' => $timestamp,
+                ]);
+            } elseif ($method == 'GET') {
                 $response = Http::withHeaders([
-                            'X-AUTH-APIKEY' => $this->api_key,
-                            'X-AUTH-SIGNATURE' => $signature
-                        ])->get($url);
-        }
-        catch (ConnectionException $e) {
+                    'X-AUTH-APIKEY'    => $this->api_key,
+                    'X-AUTH-SIGNATURE' => $signature,
+                ])->get($url);
+            }
+        } catch (ConnectionException $e) {
             return $error = [
-                'code' => $e->getCode(),
-                'error' => 'Host Not Found',
-                'message' => 'Could not resolve host: ' . $this->api_url
+                'code'    => $e->getCode(),
+                'error'   => 'Host Not Found',
+                'message' => 'Could not resolve host: '.$this->api_url,
             ];
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return $error = [
-                'code' => $e->getCode(),
-                'error' => 'cUrl Error',
-                'message' => $e->getMessage()
+                'code'    => $e->getCode(),
+                'error'   => 'cUrl Error',
+                'message' => $e->getMessage(),
             ];
         }
 
         // If response if Ok. Return collection.
-        if($response->ok())
+        if ($response->ok()) {
             return $response->collect();
-        else
+        } else {
             return $this->handleError($response);
+        }
     }
 
     /**
      * Get the milliseconds from the system clock.
-     * @return integer
+     *
+     * @return int
      */
     private function milliseconds()
     {
-        list ($msec, $sec) = explode (' ', microtime ());
+        list($msec, $sec) = explode(' ', microtime());
 
-        return $sec . substr ($msec, 2, 3);
+        return $sec.substr($msec, 2, 3);
     }
 }
