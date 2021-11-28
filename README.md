@@ -1,6 +1,6 @@
 ![](https://banners.beyondco.de/Laravel-CoinDCX-API.png?theme=light&packageManager=composer+require&packageName=techtailor%2Flaravel-coindcx-api&pattern=architect&style=style_2&description=A+laravel+wrapper+for+the+CoinDCX+API.&md=1&showWatermark=0&fontSize=100px&images=server)
 
-[![GitHub release](https://img.shields.io/github/release/techtailor/laravel-coindcx-api.svg?include_prereleases&style=for-the-badge&&colorB=7E57C2)](https://packagist.org/packages/techtailor/laravel-CoinDCX-api)
+[![GitHub release](https://img.shields.io/github/release/techtailor/laravel-coindcx-api.svg?include_prereleases&style=for-the-badge&&colorB=7E57C2)](https://packagist.org/packages/techtailor/laravel-coindcx-api)
 [![GitHub issues](https://img.shields.io/github/issues/TechTailor/Laravel-CoinDCX-Api.svg?style=for-the-badge)](https://github.com/TechTailor/Laravel-CoinDCX-Api/issues)
 [![Software License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&&colorB=F27E40)](license.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/techtailor/laravel-coindcx-api.svg?style=for-the-badge)](https://packagist.org/packages/techtailor/laravel-coindcx-api)
@@ -62,7 +62,7 @@ $cdx = new CoinDCXApi();
 
 $cdx->setApi($apiKey, $secretKey);
 
-$accountInfo = $cdx->getAccountInfo();
+$ticker = $cdx->getTicker();
 ```
 
 ### Available Methods
