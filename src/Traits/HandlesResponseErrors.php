@@ -8,49 +8,43 @@ trait HandlesResponseErrors
     {
         // Set a default error.
         $error = [
-            "code" => "1000",
-            "error" => "Invalid",
-            "message" => "Unable to identify the type of error."
+            'code'    => '1000',
+            'error'   => 'Invalid',
+            'message' => 'Unable to identify the type of error.',
         ];
 
         // Return server related errors (500 range).
-        if($response->serverError())
-        {
+        if ($response->serverError()) {
             // TBA
         }
         // Return client related errors.
-        elseif($response->clientError())
-        {
+        elseif ($response->clientError()) {
             // If client error has a response code.
-            if(isset($response['code']))
-            {
+            if (isset($response['code'])) {
                 // Switch between known CoinDCX error codes.
-                switch($response['code'])
-                {
-                    case('404') :
+                switch ($response['code']) {
+                    case '404':
                             $error = [
-                                "code" => "404",
-                                "error" => "Resource Not Found",
-                                "message" => "We could not locate the resource or the endpoint given."
+                                'code'    => '404',
+                                'error'   => 'Resource Not Found',
+                                'message' => 'We could not locate the resource or the endpoint given.',
                             ];
                             break;
-                    case ('401'):
+                    case '401':
                         $error = [
-                            "code" => "401",
-                            "error" => "Invalid Credentials",
-                            "message" => "Your API Request Signature is invalid."
+                            'code'    => '401',
+                            'error'   => 'Invalid Credentials',
+                            'message' => 'Your API Request Signature is invalid.',
                         ];
                         break;
                 }
-            }
-            else {
+            } else {
                 // If client error a response status.
-                if($response->status() === 403)
-                {
+                if ($response->status() === 403) {
                     $error = [
-                        "code" => "403",
-                        "error" => "Forbidden",
-                        "message" => "You don't have permission to access this resouce."
+                        'code'    => '403',
+                        'error'   => 'Forbidden',
+                        'message' => "You don't have permission to access this resouce.",
                     ];
                 }
             }
