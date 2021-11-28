@@ -52,7 +52,7 @@ use TechTailor\CoinDCXApi\CoinDCXApi;
 
 $cdx = new CoinDCXApi();
 
-$time = $cdx->getTime();
+$ticker = $cdx->getTicker();
 ```
 
 You can also set an API & Secret for a user by passing it after initalization (useful when you need to isolate api keys for individual users):
@@ -62,7 +62,7 @@ $cdx = new CoinDCXApi();
 
 $cdx->setApi($apiKey, $secretKey);
 
-$ticker = $cdx->getTicker();
+$accountInfo = $cdx->getAccountInfo();
 ```
 
 ### Available Methods
