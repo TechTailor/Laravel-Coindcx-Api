@@ -239,6 +239,9 @@ class CoinDCXApi
     {
         $url = $this->api_url.$url;
 
+        // Adding parameters to the url.
+        $url = $url . '?' . http_build_query($params);
+
         return $this->sendApiRequest($url, $method);
     }
 
