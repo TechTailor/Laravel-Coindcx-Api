@@ -147,11 +147,13 @@ class CoinDCXApi
      *
      * @return mixed
      */
-    public function getCandles($pair, $interval = '5m')
+    public function getCandles($pair, $interval = '5m', $startTime = null, $endTime = null)
     {
         $data = [
             'pair'     => $pair,
             'interval' => $interval,
+            'startTime' => $startTime,
+            'endTime' => $endTime
         ];
 
         $this->api_url = $this->public_url;
