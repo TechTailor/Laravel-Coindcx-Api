@@ -153,7 +153,7 @@ class CoinDCXApi
             'pair'     => $pair,
             'interval' => $interval,
             'startTime' => $startTime,
-            'endTime' => $endTime
+            'endTime' => $endTime,
         ];
 
         $this->api_url = $this->public_url;
@@ -242,7 +242,7 @@ class CoinDCXApi
         $url = $this->api_url.$url;
 
         // Adding parameters to the url.
-        $url = $url . '?' . http_build_query($params);
+        $url = $url.'?'.http_build_query($params);
 
         return $this->sendApiRequest($url, $method);
     }
